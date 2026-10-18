@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "npx serve . -l 3000",
     "dev": "npx tailwindcss -i ./css/input.css -o ./css/style.css --watch",
     "lint": "eslint .",
     "format": "prettier --write .",
@@ -26,6 +27,7 @@
     "@playwright/test": "^1.63.0",
     "@types/node": "^26.6.4",
     "@vitest/ui": "^3.2.7",
+    "dotenv": "^18.0.7",
     "eslint": "^9.39.5",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.6",
