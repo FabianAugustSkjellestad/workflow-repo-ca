@@ -1,5 +1,5 @@
 import { getUsername } from "../../utils/storage.js";
-import { isActivePath } from "../../utils/userInterface.js";
+import { isActivePath } from "../../utils/isActivePath.js";
 
 export function createMenu() {
   const container = document.querySelector("#menu-container");
