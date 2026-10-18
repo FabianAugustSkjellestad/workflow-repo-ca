@@ -1,1 +1,24 @@
-node_modules/
+# Dependencies
+node_modules
+
+# System Files
+.DS_Store
+
+# Build Output
+dist
+coverage
+
+#Playwright
+playwright-report
+test-results
+
+# Logs
+*.log
+npm-debug.log*
+
+# Playwright
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+.env

@@ -30,7 +30,9 @@ async function handleLoginSubmit(event) {
   submitButton.textContent = "Logging in...";
 
   try {
-    const { accessToken, ...user } = await login(profile);
+    const {
+      data: { accessToken, ...user },
+    } = await login(profile);
     saveToken(accessToken);
     saveUser(user);
     window.location.href = "/";

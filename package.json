@@ -4,12 +4,40 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npx tailwindcss -i ./css/input.css -o ./css/style.css --watch"
+    "start": "npx serve . -l 3000",
+    "dev": "npx tailwindcss -i ./css/input.css -o ./css/style.css --watch",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
+    "prepare": "husky",
+    "e2e": "playwright test",
+    "e2e:ui": "playwright test --ui",
+    "e2e:report": "playwright show-report",
+    "serve": "live-server --port=5500 --no-browser --quiet"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "tailwindcss": "^3.4.12"
+    "@eslint/js": "^9.39.5",
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.6.4",
+    "@vitest/ui": "^3.2.7",
+    "dotenv": "^18.0.7",
+    "eslint": "^9.39.5",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.6",
+    "globals": "^17.13.0",
+    "husky": "^9.1.7",
+    "jsdom": "^27.0.1",
+    "lint-staged": "^17.6.0",
+    "live-server": "^1.2.2",
+    "prettier": "^3.9.9",
+    "tailwindcss": "^3.4.12",
+    "vitest": "^3.2.7"
   }
 }
