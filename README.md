@@ -12,27 +12,27 @@ Holidaze Venue Booking is the project for the CA in Workflow
 
 Clone the repository and install dependencies:
 
-# Install dependencies
+- Install dependencies
 
 npm install
 
-# Install Playwright browsers (first-time only)
+- Install Playwright browsers (first-time only)
 
 npx playwright install
 
-# Start Tailwind watcher in one terminal
+- Start Tailwind watcher in one terminal
 
 npm run dev
 
-# Serve the site in another terminal
+- Serve the site in another terminal
 
 npm start
 
-# Run unit tests
+- Run unit tests
 
 npm test
 
-# Run end-to-end tests
+- Run end-to-end tests
 
 npm run e2e
 
