@@ -19,7 +19,7 @@ test.describe('Login Flow', () => {
         ]);
 
         console.log('Login response status:', response.status());
-        if (!response.status() !== 200) {
+        if (response.status() !== 200) {
             console.log('Login response body:', await response.text());
         }
         expect(response.status()).toBe(200);
