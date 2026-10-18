@@ -8,20 +8,29 @@ test.describe('Login Flow', () => {
     test('user can log in with valid credentials', async ({ page }) => {
         await page.locator('#loginForm input[name="email"]').fill(process.env.TEST_USER_EMAIL);
         await page.locator('#loginForm input[name="password"]').fill(process.env.TEST_USER_PASSWORD);
+    
+        // Wait for the login API response AND the redirect together
+        await Promise.all([
+            page.waitForResponse(res => res.url().includes('/auth/login') && res.status() === 200),
+            page.waitForURL(/\/(index\.html)?$/),
+            page.getByRole('button', { name: 'Login' }).click(),
+        ]);
 
-        await page.getByRole('button', { name: 'Login' }).click();
+        // Survives navigations/reloads
+        await page.waitForFunction(
+            () => localStorage.getItem('token') !== null && localStorage.getItem('user') !== null,
+            { timeout: 10000 } 
+    );
 
-        // Redirects to "/" after successful login
-        await expect(page).toHaveURL(/\/$/);
-
-        // Token is saved as JSON-stringified string -> Parse before asserting
+    
+        // Token is stored as a JSON-stringified string
         const token = await page.evaluate(() => JSON.parse(localStorage.getItem('token')));
         expect(token).toBeTruthy();
         expect(typeof token).toBe('string');
-
-        // User object is also saved
+    
         const user = await page.evaluate(() => JSON.parse(localStorage.getItem('user')));
         expect(user).toBeTruthy();
+        expect(user.email).toBe(process.env.TEST_USER_EMAIL);
     });
 
     test('shows API error message on invalid credentials', async ({ page }) => {
@@ -49,6 +58,6 @@ test.describe('Login Flow', () => {
         await expect(messageContainer.locator('p.text-red-500').first()).toBeVisible();
 
         // Should NOT have navigated
-        await expect(page).toHaveURL(/\/login\/index.html/);
+        await expect(page).toHaveURL(/\/login\/index\.html$/);
     });
 });
