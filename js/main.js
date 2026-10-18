@@ -12,13 +12,16 @@ function initializeApp() {
   const path = window.location.pathname;
   console.log(path);
 
-  if (path === "/" || path === "/index.html") {
+  if (
+    path === "/" ||
+    (path.endsWith("/index.html") && path === "/index.html")
+  ) {
     displayVenueList();
-  } else if (path.startsWith("/login")) {
+  } else if (path.includes("/login")) {
     loginFormListener();
-  } else if (path.startsWith("/register")) {
+  } else if (path.includes("/register")) {
     registerFormListener();
-  } else if (path.startsWith("/venue/")) {
+  } else if (path.includes("/venue/")) {
     displayVenue();
   }
 }
