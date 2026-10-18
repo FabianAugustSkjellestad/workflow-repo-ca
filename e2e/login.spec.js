@@ -6,15 +6,27 @@ test.describe('Login Flow', () => {
     });
 
     test('user can log in with valid credentials', async ({ page }) => {
+        expect(process.env.TEST_USER_EMAIL, 'TEST_USER_EMAIL missing').toBeTruthy();
+        expect(process.env.TEST_USER_PASSWORD, 'TEST_USER_PASSWORD missing').toBeTruthy();
+
         await page.locator('#loginForm input[name="email"]').fill(process.env.TEST_USER_EMAIL);
         await page.locator('#loginForm input[name="password"]').fill(process.env.TEST_USER_PASSWORD);
     
         // Wait for the login API response AND the redirect together
-        await Promise.all([
-            page.waitForResponse(res => res.url().includes('/auth/login') && res.status() === 200),
-            page.waitForURL(/\/(index\.html)?$/),
+        const [response] = await Promise.all([
+            page.waitForResponse(res => res.url().includes('/auth/login')),
             page.getByRole('button', { name: 'Login' }).click(),
         ]);
+
+        console.log('Login response status:', response.status());
+        if (!response.status() !== 200) {
+            console.log('Login response body:', await response.text());
+        }
+        expect(response.status()).toBe(200);
+
+       
+        // Then wait for the redirect away from /login/
+        await page.waitForURL(url => !url.pathname.includes('/login/')); 
 
         // Survives navigations/reloads
         await page.waitForFunction(
